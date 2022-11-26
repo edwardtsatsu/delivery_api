@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 from flask import Flask
+from .main.models import otp_code, user_model
 
 from .main.controllers.user_controller import user_signup_blueprint
 from .extensions import db, migrate

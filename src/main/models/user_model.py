@@ -49,3 +49,4 @@ class Role(db.Model):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     role_name = db.Column(db.String(100), unique=True, nullable=False)
     users = db.relationship("User", secondary=association_table, back_populates="roles")
+    
