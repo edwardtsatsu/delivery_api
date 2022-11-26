@@ -1,7 +1,7 @@
 import datetime
 
-from src.models.user_model import Role, User
-from src.requests.signup_request import SignupRequest
+from src.main.models.user_model import Role, User
+from src.main.requests.signup_request import SignupRequest
 
 from src.extensions import db
 

@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 load_dotenv()
 from flask import Flask
 
-from .controllers.user_controller import user_signup_blueprint
+from .main.controllers.user_controller import user_signup_blueprint
 from .extensions import db, migrate
 
 

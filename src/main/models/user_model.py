@@ -5,7 +5,7 @@ import  flask_bcrypt
 
 from sqlalchemy.dialects.postgresql import UUID
 
-from ..extensions import db
+from src.extensions import db
 
 association_table = db.Table(
     "user_roles",
