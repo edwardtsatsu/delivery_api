@@ -1,0 +1,61 @@
+# venv
+.delienv
+
+# mkdocs documentation
+/site
+src\__pycache__
+
+# compiled 
+__pycache__
+
+.delienv
+.env
+
+# migration files
+migrations
+# app
+.mypy_cache/
+/migrations
+
+.env
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+.idea/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.db
+*.egg-info/
+.installed.cfg
+*.egg
+
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+
+# IDE related files
+.vscode
+
+# C extensions
+*.so
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
