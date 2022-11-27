@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 
 from sqlalchemy.dialects.postgresql import UUID
 
@@ -12,4 +13,10 @@ class OtpCode(db.Model):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = db.Column(UUID(as_uuid=True), db.ForeignKey("users.id"))
     code = db.Column(db.String(80), unique=False, nullable=False)
-    generated_at = db.Column(db.DateTime, unique=False, nullable=False)
+    verified = db.Column(db.Boolean, unique=False, nullable=False, default=False)
+    generated_at = db.Column(
+        db.DateTime,
+        unique=False,
+        nullable=False,
+        default=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    )

@@ -1,9 +1,11 @@
-import datetime
-
-from src.main.models.user_model import Role, User
+from datetime import datetime
+from random import randint
+import requests
+from src.extensions import db
 from src.main.requests.signup_request import SignupRequest
 
-from src.extensions import db
+from ..models.otp_code_model import OtpCode
+from ..models.user_model import Role, User
 
 
 def save_new_user(body: SignupRequest):
@@ -21,7 +23,7 @@ def save_new_user(body: SignupRequest):
             "resp_msg": "User with this email already exists.",
         }, 409
 
-    user = bool(User.query.filter_by(phone_number=body.email).first())
+    user = bool(User.query.filter_by(phone_number=body.phone_number).first())
 
     if user:
         return {
@@ -34,21 +36,31 @@ def save_new_user(body: SignupRequest):
             email=body.email,
             phone_number=body.phone_number,
             username=body.username,
-            password=body.password,
-            created_at=datetime.datetime.utcnow(),
+            password=body.password
         )
 
         db.session.add(new_user)
         new_user.roles.append(res)
         db.session.commit()
-        return generate_token(new_user)
+        
+        resp = User.query.filter_by(email=body.email).first()
+        save_otp = OtpCode(
+        code=randint(1000, 9999),
+        user_id=resp.id)
+        db.session.add(save_otp)
+        db.session.commit()
+        
+        # call send otp service to send otp to customer number
+        return {
+            "resp_code": '000',
+            'resp_msg': 'otp has been sent to customers phone number'
+        }
     else:
         response_object = {
             "resp_code": "001",
             "resp_msg": "User already exists.",
         }
     return response_object, 409
-
 
 def get_all_users():
     return User.query.all()

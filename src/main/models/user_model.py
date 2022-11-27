@@ -1,8 +1,7 @@
 import uuid
 from datetime import datetime
 
-import  flask_bcrypt
-
+import flask_bcrypt
 from sqlalchemy.dialects.postgresql import UUID
 
 from src.extensions import db
@@ -25,7 +24,11 @@ class User(db.Model):
     phone_number = db.Column(db.String(100), unique=True, nullable=False)
     username = db.Column(db.String(50), unique=False)
     password_hash = db.Column(db.String(100))
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    )
     roles = db.relationship("Role", secondary=association_table, back_populates="users")
 
     @property
@@ -49,4 +52,3 @@ class Role(db.Model):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     role_name = db.Column(db.String(100), unique=True, nullable=False)
     users = db.relationship("User", secondary=association_table, back_populates="roles")
-    
