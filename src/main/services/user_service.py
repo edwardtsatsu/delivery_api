@@ -1,6 +1,5 @@
-from datetime import datetime
 from random import randint
-import requests
+
 from src.extensions import db
 from src.main.requests.signup_request import SignupRequest
 
@@ -9,7 +8,6 @@ from ..models.user_model import Role, User
 
 
 def save_new_user(body: SignupRequest):
-    print(body.email, body.phone_number, body.username, body.password, body.user_type)
     if body.user_type == "user":
         res = Role.query.filter_by(role_name="user").first()
     else:
@@ -36,24 +34,23 @@ def save_new_user(body: SignupRequest):
             email=body.email,
             phone_number=body.phone_number,
             username=body.username,
-            password=body.password
+            password=body.password,
         )
 
         db.session.add(new_user)
         new_user.roles.append(res)
         db.session.commit()
-        
+
+        # generate otp and save to db
         resp = User.query.filter_by(email=body.email).first()
-        save_otp = OtpCode(
-        code=randint(1000, 9999),
-        user_id=resp.id)
-        db.session.add(save_otp)
+        otp = OtpCode(code=randint(1000, 9999), user_id=resp.id)
+        db.session.add(otp)
         db.session.commit()
-        
-        # call send otp service to send otp to customer number
+
+        # call sms service to send otp to customer number
         return {
-            "resp_code": '000',
-            'resp_msg': 'otp has been sent to customers phone number'
+            "resp_code": "000",
+            "resp_msg": "otp has been sent to customers phone number",
         }
     else:
         response_object = {
@@ -61,29 +58,6 @@ def save_new_user(body: SignupRequest):
             "resp_msg": "User already exists.",
         }
     return response_object, 409
-
-def get_all_users():
-    return User.query.all()
-
-
-def get_a_user(id):
-    return User.query.filter_by(id=id).first()
-
-
-def generate_token(user: User):
-    try:
-        auth_token = User.encode_auth_token(user.id)
-        response_object = {
-            "status": "success",
-            "message": "Successfully registred.",
-            "Authorization": auth_token.decode(),
-        }, 201
-    except Exception as e:
-        response_object = {
-            "status": "fail",
-            "message": f"Some error occurred. Please try again {e}",
-        }, 422
-        return response_object
 
 
 def save_changes(data: User) -> None:
