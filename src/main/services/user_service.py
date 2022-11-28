@@ -1,7 +1,8 @@
 from random import randint
-
+from datetime import datetime
 from src.extensions import db
 from src.main.requests.signup_request import SignupRequest
+from src.main.requests.verify_otp_request import VerifyOtpRequest
 
 from ..models.otp_code_model import OtpCode
 from ..models.user_model import Role, User
@@ -58,6 +59,41 @@ def save_new_user(body: SignupRequest):
             "resp_msg": "User already exists.",
         }
     return response_object, 409
+
+
+def otp_verification(body: VerifyOtpRequest):
+    user = bool(User.query.filter_by(phone_number=body.phone_number).first())
+    if not user:
+        return {
+            "resp_code": "001",
+            "resp_msg": "User with this phone_number not found.",
+        }, 404
+    id = User.query.filter_by(phone_number=body.phone_number).first().id
+    otp_resp = OtpCode.query.filter_by(user_id=id).first()
+    if body.code == otp_resp.code:
+        if otp_expiry(otp_resp.generated_at) > 5:
+            return {
+                "resp_code": "022",
+                "resp_msg": "otp has expired.",
+            }, 404
+        OtpCode.query.filter_by(user_id=id).update({"verified": True})
+        db.session.commit()
+    else:
+        return {
+            "resp_code": "001",
+            "resp_msg": "Invalid otp",
+        }, 403
+
+    return {"resp_code": "000", "resp_msg": "successfully verified user and login!"}
+
+
+def otp_expiry(generated_at):
+    end_time = datetime.strptime(
+        datetime.now().strftime("%Y-%m-%d" "%H:%M:%S"), "%Y-%m-%d" "%H:%M:%S"
+    )
+    min = (end_time - generated_at).seconds / 60
+    print(min)
+    return min
 
 
 def save_changes(data: User) -> None:

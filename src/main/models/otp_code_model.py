@@ -18,5 +18,6 @@ class OtpCode(db.Model):
         db.DateTime,
         unique=False,
         nullable=False,
-        default=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        default=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     )
+
