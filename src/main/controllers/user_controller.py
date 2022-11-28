@@ -15,7 +15,7 @@ def save_user(body: SignupRequest):
     return save_new_user(body)
 
 
-@verify_otp_blueprint.route("/user/verify-otp", methods=['POST'])
+@verify_otp_blueprint.route("/user/verify-otp", methods=["POST"])
 @validate()
 def verify_otp(body: VerifyOtpRequest):
     return otp_verification(body)

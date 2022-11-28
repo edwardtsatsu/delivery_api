@@ -19,7 +19,7 @@ def save_new_user(body: SignupRequest):
     if user:
         return {
             "resp_code": "001",
-            "resp_msg": "User with this email already exists.",
+            "resp_msg": "account no created with these details.",
         }, 409
 
     user = bool(User.query.filter_by(phone_number=body.phone_number).first())
@@ -27,7 +27,7 @@ def save_new_user(body: SignupRequest):
     if user:
         return {
             "resp_code": "001",
-            "resp_msg": "User with this phone_number already exists.",
+            "resp_msg": "account no created with these details.",
         }, 409
 
     if not user:
