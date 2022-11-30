@@ -21,7 +21,7 @@ def generate_otp(body: GenerateOtpRequest):
     response = requests.post(url=os.getenv("SMS_URL"), json=payload)
 
     # if sent the succesfuly, save code in db
-    if response.json()['responseCode'] == 200:
+    if response.json()["responseCode"] == 200:
         otp = OtpCode(
             code=otp_code,
             phone_number=body.phone_number,
