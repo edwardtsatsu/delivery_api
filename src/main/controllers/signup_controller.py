@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask_pydantic import validate
 
 from src.main.requests.signup_request import SignupRequest
-from src.main.services.user_service import save_new_user
+from src.main.services.signup_service import save_new_user
 
 user_signup_blueprint = Blueprint("signup", "__name__")
 
