@@ -9,7 +9,7 @@ load_dotenv()
 
 from src.extensions import db
 from src.main.requests.generate_otp_request import GenerateOtpRequest
-from src.main.responses.generate_otp_response import GenerateOtpResponse
+from src.main.responses.generate_otp_response import GenerateOtpResponse, OtpErrorResponse
 
 from ..models.otp_code_model import OtpCode
 
@@ -30,7 +30,7 @@ def generate_otp(body: GenerateOtpRequest):
         save_otp_code(otp)
         return GenerateOtpResponse()
     else:
-        return {"msg": "012", "msg": "could not send otp, click on resend"}
+        return OtpErrorResponse()
 
 
 def sms_payload(otp, body):
