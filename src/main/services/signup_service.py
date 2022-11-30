@@ -1,3 +1,5 @@
+import flask_bcrypt
+
 from src.extensions import db
 from src.main.requests.signup_request import SignupRequest
 from src.main.responses.signup_response import (
@@ -31,7 +33,7 @@ def save_new_user(body: SignupRequest):
             email=body.email,
             phone_number=body.phone_number,
             username=body.username,
-            password=body.password,
+            password=password_encoder(body.password),
         )
         db.session.add(new_user)
         new_user.roles.append(res)
@@ -40,4 +42,9 @@ def save_new_user(body: SignupRequest):
     else:
         UserExistResponse(), 405
 
-    return UserExistResponse(), 405
+    return AccountCreatedResponse(), 200
+
+
+def password_encoder(password):
+    password_hash = flask_bcrypt.generate_password_hash(password).decode("utf-8")
+    return password_hash

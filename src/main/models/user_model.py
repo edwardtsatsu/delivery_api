@@ -1,7 +1,6 @@
 import uuid
 from datetime import datetime
 
-import flask_bcrypt
 from sqlalchemy.dialects.postgresql import UUID
 
 from src.extensions import db
@@ -23,26 +22,13 @@ class User(db.Model):
     email = db.Column(db.String(255), unique=True, nullable=False)
     phone_number = db.Column(db.String(100), unique=True, nullable=False)
     username = db.Column(db.String(50), unique=False)
-    password_hash = db.Column(db.String(100))
+    password = db.Column(db.String(255), nullable=False)
     created_at = db.Column(
         db.DateTime,
         nullable=False,
         default=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     )
     roles = db.relationship("Role", secondary=association_table, back_populates="users")
-
-    @property
-    def password(self):
-        raise AttributeError("password: write-only field")
-
-    @password.setter
-    def password(self, password):
-        self.password_hash = flask_bcrypt.generate_password_hash(password).decode(
-            "utf-8"
-        )
-
-    def check_password(self, password):
-        return flask_bcrypt.check_password_hash(self.password_hash, password)
 
 
 class Role(db.Model):
