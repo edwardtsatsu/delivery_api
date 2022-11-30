@@ -1,10 +1,10 @@
 from flask import Blueprint
-from flask_pydantic import  validate
+from flask_pydantic import validate
+
 from src.main.requests.generate_otp_request import GenerateOtpRequest
 from src.main.services.generated_otp_service import generate_otp
 
-
-generate_otp_blueprint = Blueprint('generate-otp', "__name__")
+generate_otp_blueprint = Blueprint("generate-otp", "__name__")
 
 
 @generate_otp_blueprint.route("/user/generate-otp", methods=["POST"])

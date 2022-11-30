@@ -5,11 +5,6 @@ from sqlalchemy import desc
 from src.extensions import db
 from src.main.models.otp_code_model import OtpCode
 from src.main.requests.verify_otp_request import VerifyOtpRequest
-from src.main.responses.signup_response import (
-    AccountCreatedResponse,
-    AcoountNotCreatedResponse,
-    UserExistResponse,
-)
 
 
 def otp_verification(body: VerifyOtpRequest):

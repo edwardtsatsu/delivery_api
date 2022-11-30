@@ -1,15 +1,11 @@
-from datetime import datetime
-
-from sqlalchemy import desc, select
-
 from src.extensions import db
 from src.main.requests.signup_request import SignupRequest
-from src.main.requests.verify_otp_request import VerifyOtpRequest
-from src.main.responses.signup_response import (AccountCreatedResponse,
-                                                AcoountNotCreatedResponse,
-                                                UserExistResponse)
+from src.main.responses.signup_response import (
+    AccountCreatedResponse,
+    AcoountNotCreatedResponse,
+    UserExistResponse,
+)
 
-from ..models.otp_code_model import OtpCode
 from ..models.user_model import Role, User
 
 
