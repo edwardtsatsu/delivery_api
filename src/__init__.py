@@ -5,7 +5,8 @@ load_dotenv()
 from flask import Flask
 from .main.models import otp_code_model, user_model
 
-from .main.controllers.user_controller import user_signup_blueprint, verify_otp_blueprint
+from .main.controllers.user_controller import user_signup_blueprint
+from .main.controllers.verify_otp_controller import verify_otp_blueprint
 from .main.controllers.generate_otp_controller import generate_otp_blueprint
 from .extensions import db, migrate
 
