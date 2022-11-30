@@ -8,4 +8,3 @@ load_dotenv()
 
 class GenerateOtpRequest(BaseModel):
     phone_number: str
-    
