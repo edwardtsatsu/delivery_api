@@ -5,6 +5,8 @@ from random import randint
 import requests
 from dotenv import load_dotenv
 
+from src.main.requests.generate_otp_request import GenerateOtpRequest
+
 load_dotenv()
 
 from src.extensions import db
@@ -17,7 +19,7 @@ from ..models.otp_code_model import OtpCode
 
 
 class GenerateOtpService:
-    def __init__(self, body):
+    def __init__(self, body: GenerateOtpRequest):
         self.phone_number = body.phone_number
 
     def generate_otp(self):
