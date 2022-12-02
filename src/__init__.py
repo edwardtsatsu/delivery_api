@@ -15,6 +15,7 @@ from .main.controllers.login_controller import (
 )
 from .main.controllers.signup_controller import user_signup_blueprint
 from .main.controllers.verify_otp_controller import verify_otp_blueprint
+from .main.controllers.verify_phone_number_controller import verify_phone_number_blueprint
 from .main.models import otp_code_model, user_model
 
 
@@ -35,5 +36,6 @@ def create_app():
     app.register_blueprint(user_login_blueprint, url_prefix="/api/v1")
     app.register_blueprint(create_order_blueprint, url_prefix="/api/v1")
     app.register_blueprint(reset_password_blueprint, url_prefix="/api/v1")
+    app.register_blueprint(verify_phone_number_blueprint, url_prefix="/api/v1")
 
     return app

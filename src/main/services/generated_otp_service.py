@@ -19,8 +19,8 @@ from ..models.otp_code_model import OtpCode
 
 
 class GenerateOtpService:
-    def __init__(self, body: GenerateOtpRequest):
-        self.phone_number = body.phone_number
+    def __init__(self, body):
+        self.phone_number = body
 
     def generate_otp(self):
         self.otp_code = randint(1000, 9999)

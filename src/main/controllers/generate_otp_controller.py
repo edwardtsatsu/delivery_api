@@ -10,4 +10,4 @@ generate_otp_blueprint = Blueprint("generate-otp", "__name__")
 @generate_otp_blueprint.route("/user/generate-otp", methods=["POST"])
 @validate()
 def create_otp(body: GenerateOtpRequest):
-    return GenerateOtpService(body).generate_otp()
+    return GenerateOtpService(body.phone_number).generate_otp()

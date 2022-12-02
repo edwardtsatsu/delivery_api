@@ -4,8 +4,7 @@ from src.main.responses.forget_password_response import ForgetPasswordResponse
 
 class ForgetPassword:
     def __init__(self, body: ForgetPasswordRequest) -> None:
-        self.body = body.phone_number
+        self.phone_number = body
 
     def reset_password(self):
-        print(self.body)
-        return ForgetPasswordResponse(), 200
+        return "oaky"

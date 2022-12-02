@@ -10,4 +10,4 @@ reset_password_blueprint = Blueprint("reset-password", "__name__")
 @reset_password_blueprint.route("/user/reset-password", methods=["POST"])
 @validate()
 def forget_password(body: ForgetPasswordRequest):
-    return ForgetPassword(body).reset_password()
+    return ForgetPassword(body.phone_number).reset_password()
