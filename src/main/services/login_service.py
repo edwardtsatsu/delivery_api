@@ -10,7 +10,6 @@ from ..models.user_model import User
 def login(body: LoginRequest):
     email = body.email
     password = body.password.encode()
-    
 
     user = User.query.filter_by(email=email).first()
     if not user:
@@ -20,7 +19,7 @@ def login(body: LoginRequest):
         acces_token = create_access_token(identity=user.id)
         return {"access_token": acces_token, "user_id": user.id}, 200
     else:
-        return {'resp_code': '003', 'resp_msg':"Invalid Login Info"}, 400
+        return {"resp_code": "003", "resp_msg": "Invalid Login Info"}, 400
 
 
 def make_order(body: LoginRequest):

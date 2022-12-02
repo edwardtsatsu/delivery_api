@@ -7,15 +7,17 @@ from flask import Flask
 from flask_jwt_extended import JWTManager
 
 from .extensions import db, migrate
-from .main.controllers.reset_password_controlller import reset_password_blueprint
 from .main.controllers.generate_otp_controller import generate_otp_blueprint
 from .main.controllers.login_controller import (
     create_order_blueprint,
     user_login_blueprint,
 )
+from .main.controllers.reset_password_controlller import reset_password_blueprint
 from .main.controllers.signup_controller import user_signup_blueprint
 from .main.controllers.verify_otp_controller import verify_otp_blueprint
-from .main.controllers.verify_phone_number_controller import verify_phone_number_blueprint
+from .main.controllers.verify_phone_number_controller import (
+    verify_phone_number_blueprint,
+)
 from .main.models import otp_code_model, user_model
 
 
