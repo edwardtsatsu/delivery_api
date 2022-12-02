@@ -7,7 +7,7 @@ from flask import Flask
 from flask_jwt_extended import JWTManager
 
 from .extensions import db, migrate
-from .main.controllers.forget_password_controlller import reset_password_blueprint
+from .main.controllers.reset_password_controlller import reset_password_blueprint
 from .main.controllers.generate_otp_controller import generate_otp_blueprint
 from .main.controllers.login_controller import (
     create_order_blueprint,
