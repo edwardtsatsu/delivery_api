@@ -19,16 +19,13 @@ from ..models.otp_code_model import OtpCode
 
 
 class GenerateOtpService:
-    def __init__(self, body):
-        self.phone_number = body
+    def __init__(self, body: GenerateOtpRequest):
+        self.phone_number = body.phone_number
 
-    def generate_otp(self):
-        self.otp_code = randint(1000, 9999)
-        payload = self.sms_payload()
+    def send_otp(self):
+        self.otp_code = self.generate_otp()
 
-        response = requests.post(url=os.getenv("SMS_URL"), json=payload)
-
-        print(response.json())
+        response = self.send_sms()
 
         # if sent the succesfuly, save code in db
         if response.json()["responseCode"] == 200:
@@ -51,6 +48,12 @@ class GenerateOtpService:
             "msisdn": self.phone_number,
             "message": os.getenv("MESSAGE") + str(self.otp_code),
         }
+
+    def send_sms(self):
+        return requests.post(url=os.getenv("SMS_URL"), json=self.sms_payload())
+
+    def generate_otp(self):
+        return randint(1000, 9999)
 
     def save_otp_code(self):
         db.session.add(self.otp)
