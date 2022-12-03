@@ -23,9 +23,9 @@ class GenerateOtpService:
         self.phone_number = body.phone_number
 
     def send_otp(self):
-        self.otp_code = self.generate_otp()
+        self.otp_code = self._generate_otp()
 
-        response = self.send_sms()
+        response = self._send_sms()
 
         # if sent the succesfuly, save code in db
         if response.json()["responseCode"] == 200:
@@ -39,7 +39,7 @@ class GenerateOtpService:
         else:
             return OtpErrorResponse()
 
-    def sms_payload(self):
+    def _sms_payload(self):
         return {
             "username": os.getenv("USER_NAME"),
             "password": os.getenv("PASSWORD"),
@@ -49,10 +49,10 @@ class GenerateOtpService:
             "message": os.getenv("MESSAGE") + str(self.otp_code),
         }
 
-    def send_sms(self):
-        return requests.post(url=os.getenv("SMS_URL"), json=self.sms_payload())
+    def _send_sms(self):
+        return requests.post(url=os.getenv("SMS_URL"), json=self._sms_payload())
 
-    def generate_otp(self):
+    def _generate_otp(self):
         return randint(1000, 9999)
 
     def save_otp_code(self):
