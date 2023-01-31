@@ -27,7 +27,7 @@ class GenerateOtpService:
 
         response = self._send_sms()
 
-        # if sent the succesfuly, save code in db
+        # if sent the successfully, save code in db
         if response.json()["responseCode"] == 200:
             self.otp = OtpCode(
                 code=self.otp_code,

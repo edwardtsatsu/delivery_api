@@ -16,8 +16,8 @@ def login(body: LoginRequest):
         return "User Not Found", 404
 
     if flask_bcrypt.check_password_hash(user.password, password):
-        acces_token = create_access_token(identity=user.id)
-        return {"access_token": acces_token, "user_id": user.id}, 200
+        access_token = create_access_token(identity=user.id)
+        return {"access_token": access_token, "user_id": user.id}, 200
     else:
         return {"resp_code": "003", "resp_msg": "Invalid Login Info"}, 400
 

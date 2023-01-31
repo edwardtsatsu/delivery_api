@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class SucessResponse(BaseModel):
+class SuccessResponse(BaseModel):
     resp_code: str = "000"
     resp_msg: str = "Password has been reset successfully!"
 

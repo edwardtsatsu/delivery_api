@@ -1,6 +1,6 @@
 from src.extensions import db
 from src.main.requests.reset_password_request import ResetPasswordRequest
-from src.main.responses.reset_password_response import FailureResponse, SucessResponse
+from src.main.responses.reset_password_response import FailureResponse, SuccessResponse
 from src.main.services.signup_service import password_encoder
 
 from ..models.user_model import User
@@ -17,4 +17,4 @@ class ResetPassword:
             {User.password: password_encoder(self.new_password)}
         )
         db.session.commit()
-        return SucessResponse(), 200
+        return SuccessResponse(), 200

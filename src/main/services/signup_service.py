@@ -4,7 +4,7 @@ from src.extensions import db
 from src.main.requests.signup_request import SignupRequest
 from src.main.responses.signup_response import (
     AccountCreatedResponse,
-    AcoountNotCreatedResponse,
+    AccountNotCreatedResponse,
     UserExistResponse,
 )
 
@@ -21,12 +21,12 @@ def save_new_user(body: SignupRequest):
     user = bool(User.query.filter_by(email=body.email).first())
 
     if user:
-        return AcoountNotCreatedResponse(), 409
+        return AccountNotCreatedResponse(), 409
 
     user = bool(User.query.filter_by(phone_number=body.phone_number).first())
 
     if user:
-        return AcoountNotCreatedResponse(), 409
+        return AccountNotCreatedResponse(), 409
 
     if not user:
         new_user = User(

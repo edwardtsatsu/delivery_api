@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class AcoountNotCreatedResponse(BaseModel):
+class AccountNotCreatedResponse(BaseModel):
     resp_code: str = "022"
     resp_desc: str = "Account could not be created with these details!"
 
